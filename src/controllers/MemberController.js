@@ -13,6 +13,8 @@ class MemberController {
 
   async create(req, res) {
     const { email, name, birthdate } = req.body;
+    const photoAdded = req.file;
+    console.log(photoAdded);
     const photo =
       "https://specials-images.forbesimg.com/imageserve/5d68b2b568cb0a0008c0dba9/960x0.jpg?fit=scale";
 

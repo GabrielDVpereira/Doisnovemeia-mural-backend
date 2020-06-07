@@ -1,6 +1,7 @@
 import express from "express";
 import routes from "./routes";
 import mongoose from "mongoose";
+import cors from "cors";
 import "dotenv/config";
 
 class App {
@@ -13,6 +14,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
   }
   routes() {
     this.server.use(routes);

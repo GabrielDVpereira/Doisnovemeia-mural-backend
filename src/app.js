@@ -4,32 +4,23 @@ import mongoose from "mongoose";
 import cors from "cors";
 import "dotenv/config";
 
-class App {
-  constructor() {
-    this.server = express();
-    this.connectDatabase();
-    this.middlewares();
-    this.routes();
-  }
+const express = require("express");
+const routes = require("./routes");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-  middlewares() {
-    this.server.use(express.json());
-    this.server.use(cors());
-  }
-  routes() {
-    this.server.use(routes);
-  }
-  async connectDatabase() {
-    try {
-      await mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      console.log("Successfully connected to mongo");
-    } catch (error) {
-      console.log(`error to connect to Atlas DB: ${error}`);
-    }
-  }
-}
+const app = express();
 
-export default new App().server;
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Successfully connected to mongo"))
+  .catch((error) => console.log(`error to connect to Atlas DB: ${error}`));
+
+app.use(express.json());
+app.use(cors());
+app.use(routes);
+
+module.exports = app;

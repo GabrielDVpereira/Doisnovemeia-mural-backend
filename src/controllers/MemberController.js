@@ -1,6 +1,7 @@
 const Member = require("../models/Member");
 const _ = require("lodash");
 const uploadFileCloudinary = require("../utils/fileUploadCloudinary");
+const deleteFileCloudinary = require("../utils/deleteFileCloudinary");
 
 class MemberController {
   async index(req, res) {
@@ -19,9 +20,16 @@ class MemberController {
       const member = await Member.find({ email });
       if (member.length) throw "There is a member with this email";
 
-      const photo = await uploadFileCloudinary(req.file.filename);
+      const photo = req.file.filename;
+      const { photo_url, photo_id } = await uploadFileCloudinary(photo);
 
-      const newMember = await Member.create({ email, name, birthdate, photo });
+      const newMember = await Member.create({
+        email,
+        name,
+        birthdate,
+        photoId: photo_id,
+        photoUrl: photo_url,
+      });
       return res.json({
         member: _.pick(newMember, ["name", "email", "birthdate", "photo"]),
         message: "new member successfully added!",
@@ -33,7 +41,12 @@ class MemberController {
   async delete(req, res) {
     const { id: _id } = req.params;
     try {
-      const member = await Member.deleteOne({ _id }, function (error) {});
+      const member = await Member.findOne({ _id });
+      if (!member) throw "member not found, may be alredy deleted";
+
+      await Member.deleteOne({ _id }, function (error) {});
+      await deleteFileCloudinary(member.photoId);
+
       return res.json({ deleted: true });
     } catch (error) {
       return res.status(400).json({ error: error.message || error });

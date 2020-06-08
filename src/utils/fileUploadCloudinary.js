@@ -7,8 +7,7 @@ const uploadFile = (filename) => {
 
     cloudinary.uploader.upload(photoPath, function (error, result) {
       if (error) reject(error);
-
-      resolve(result.url);
+      resolve({ photo_url: result.url, photo_id: result.public_id });
     });
   });
 };

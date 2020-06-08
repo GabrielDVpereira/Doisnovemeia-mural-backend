@@ -14,7 +14,11 @@ const MemberSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    photo: {
+    photoId: {
+      type: String,
+      required: true,
+    },
+    photoUrl: {
       type: String,
       required: true,
     },

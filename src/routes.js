@@ -10,7 +10,7 @@ const uoloadFile = multer(multerConfig);
 
 routes.post("/admin/create", fieldVerification.auth, AdminController.create);
 routes.post("/admin/auth", AdminController.auth);
-routes.get("/member", MemberController.index);
+routes.get("/members", MemberController.index);
 
 routes.use(authMiddleware);
 routes.post(

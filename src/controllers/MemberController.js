@@ -30,8 +30,9 @@ class MemberController {
         photoId: photo_id,
         photoUrl: photo_url,
       });
+      console.log(newMember);
       return res.json({
-        member: _.pick(newMember, ["name", "email", "birthdate", "photo"]),
+        member: newMember,
         message: "new member successfully added!",
       });
     } catch (error) {

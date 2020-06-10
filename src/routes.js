@@ -10,9 +10,9 @@ const uoloadFile = multer(multerConfig);
 
 routes.post("/admin/create", fieldVerification.auth, AdminController.create);
 routes.post("/admin/auth", AdminController.auth);
+routes.get("/member", MemberController.index);
 
 routes.use(authMiddleware);
-routes.get("/member", MemberController.index);
 routes.post(
   "/member",
   uoloadFile.single("photo"),

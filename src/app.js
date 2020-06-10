@@ -7,7 +7,9 @@ require("dotenv").config();
 require("./config/cloudinary");
 
 const app = express();
-
+const corsOptions = {
+  exposedHeaders: "x-auth-token",
+};
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -17,7 +19,7 @@ mongoose
   .catch((error) => console.log(`error to connect to Atlas DB: ${error}`));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(routes);
 app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
 

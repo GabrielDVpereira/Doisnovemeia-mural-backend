@@ -6,12 +6,8 @@ const MemberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
+    exposed: {
       type: String,
-      required: true,
-    },
-    birthdate: {
-      type: Date,
       required: true,
     },
     photoId: {

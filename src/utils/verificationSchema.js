@@ -2,8 +2,7 @@ const Joi = require("@hapi/joi");
 const verificationSchema = {
   member: Joi.object({
     name: Joi.string().required(),
-    email: Joi.string().required().email(),
-    birthdate: Joi.date().iso().required(),
+    exposed: Joi.string().required().min(5).max(50)
   }),
   auth: {
     email: Joi.string().required().email(),

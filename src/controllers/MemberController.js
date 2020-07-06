@@ -14,19 +14,16 @@ class MemberController {
   }
 
   async create(req, res) {
-    const { email, name, birthdate } = req.body;
+    const { name, exposed } = req.body;
 
     try {
-      const member = await Member.find({ email });
-      if (member.length) throw "There is a member with this email";
 
       const photo = req.file.filename;
       const { photo_url, photo_id } = await uploadFileCloudinary(photo);
 
       const newMember = await Member.create({
-        email,
         name,
-        birthdate,
+        exposed,
         photoId: photo_id,
         photoUrl: photo_url,
       });

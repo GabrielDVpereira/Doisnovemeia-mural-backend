@@ -28,10 +28,7 @@ class MemberController {
         photoUrl: photo_url,
       });
       console.log(newMember);
-      return res.json({
-        member: newMember,
-        message: "new member successfully added!",
-      });
+      return res.json(newMember);
     } catch (error) {
       return res.status(400).json({ error: error.message || error });
     }
